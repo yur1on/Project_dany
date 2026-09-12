@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    container_name: avtomod_web
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:8003:8000"
+    volumes:
+      - ./data:/app/data
+      - ./media:/app/media
+      - ./staticfiles:/app/staticfiles
