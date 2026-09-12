@@ -1,0 +1,75 @@
+{% extends "services/base.html" %}
+{% load static %}
+
+{% block title %}AVTOMOD - автосервис{% endblock %}
+
+{% block content %}
+<section class="hero home-hero">
+    <div class="home-hero__grid">
+        <div class="hero-copy home-hero__copy">
+            <div class="home-hero__badge">
+                <span></span>
+                <strong>AVTOMOD</strong>
+                <small>Автосервис в Гомеле</small>
+            </div>
+
+            <h1 class="hero-title">Вернем машине уверенный ход без лишнего шума вокруг ремонта</h1>
+            <p class="lead">Шиномонтаж, диагностика, подвеска, тормоза, выхлопная система и ремонт двигателя.</p>
+
+            <div class="home-hero__checks">
+                <span>Диагностика перед работами</span>
+                <span>Согласование сметы до ремонта</span>
+                <span>Обслуживание и ремонт автомобиля</span>
+                <span>Пн-Пт: 09:00-18:00</span>
+            </div>
+
+            <div class="hero-actions">
+                <a class="button primary home-hero__primary" href="{% url 'appointment_create' %}">
+                    Записаться
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a class="button secondary home-hero__secondary" href="{% url 'service_list' %}">
+                    Посмотреть услуги
+                    <span aria-hidden="true">↘</span>
+                </a>
+            </div>
+
+            <div class="home-hero__facts">
+                <div>
+                    <strong>Гомель</strong>
+                    <span>ул. Чонгарской дивизии, 5/1</span>
+                </div>
+                <div>
+                    <strong>09:00-18:00</strong>
+                    <span>понедельник-пятница</span>
+                </div>
+                <div>
+                    <strong>+375</strong>
+                    <span>29 532-57-52</span>
+                </div>
+            </div>
+        </div>
+
+        <aside class="home-hero__visual" aria-label="AVTOMOD автосервис">
+            <div class="home-hero__card">
+                <div class="home-hero__image">
+                    <img src="{% static 'services/img/workshop-hero.png' %}" alt="Ремзона AVTOMOD">
+                    <div class="home-hero__image-note">
+                        <span>Ремзона AVTOMOD</span>
+                        <strong>Осмотр → согласование → ремонт</strong>
+                    </div>
+                </div>
+
+                <div class="home-hero__summary">
+                    <div>
+                        <span>Основные направления</span>
+                        <strong>Подвеска, тормоза, двигатель, шиномонтаж</strong>
+                    </div>
+                    <a href="{% url 'contacts' %}">Контакты</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</section>
+
+{% endblock %}

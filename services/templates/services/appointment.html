@@ -1,0 +1,147 @@
+{% extends "services/base.html" %}
+{% load static %}
+
+{% block title %}Запись - AVTOMOD{% endblock %}
+
+{% block content %}
+<section class="appointment-page page-form appointment-booking">
+    <div class="appointment-booking__intro">
+        <div class="appointment-booking__badge">
+            <span></span>
+            Онлайн-запись
+        </div>
+        <h1>Оставьте заявку на ремонт</h1>
+        <p>Укажите автомобиль, тип работ и симптомы. Мы свяжемся с вами и согласуем удобный визит в AVTOMOD.</p>
+
+        <div class="appointment-booking__chips">
+            <span>Диагностика перед работами</span>
+            <span>Смета до ремонта</span>
+            <span>Пн-Пт: 09:00-18:00</span>
+        </div>
+    </div>
+
+    <div class="appointment-booking__layout">
+        <form class="form appointment-form appointment-booking__form" method="post">
+            {% csrf_token %}
+
+            <div class="appointment-booking__steps">
+                <span>1. Автомобиль</span>
+                <span>2. Вид работ</span>
+                <span>3. Контакты</span>
+            </div>
+
+            <div class="appointment-booking__section">
+                <div class="appointment-booking__section-head">
+                    <span>1</span>
+                    <h2>Автомобиль</h2>
+                </div>
+                <div class="form-grid">
+                    <p>
+                        {{ form.car_make.label_tag }}
+                        {{ form.car_make }}
+                        {% if form.car_make.errors %}
+                            <span class="field-error">{{ form.car_make.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ form.car_model.label_tag }}
+                        {{ form.car_model }}
+                        {% if form.car_model.errors %}
+                            <span class="field-error">{{ form.car_model.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ form.car_year.label_tag }}
+                        {{ form.car_year }}
+                        {% if form.car_year.errors %}
+                            <span class="field-error">{{ form.car_year.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="appointment-booking__section">
+                <div class="appointment-booking__section-head">
+                    <span>2</span>
+                    <h2>Вид работ</h2>
+                </div>
+                <div class="form-grid">
+                    <p class="wide-field">
+                        {{ form.service_type.label_tag }}
+                        {{ form.service_type }}
+                        {% if form.service_type.errors %}
+                            <span class="field-error">{{ form.service_type.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                    <p class="wide-field">
+                        {{ form.comment.label_tag }}
+                        {{ form.comment }}
+                        {% if form.comment.errors %}
+                            <span class="field-error">{{ form.comment.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="appointment-booking__section">
+                <div class="appointment-booking__section-head">
+                    <span>3</span>
+                    <h2>Контакты</h2>
+                </div>
+                <div class="form-grid">
+                    <p>
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <span class="field-error">{{ form.name.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ form.phone.label_tag }}
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <span class="field-error">{{ form.phone.errors|striptags }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <button class="button primary appointment-booking__submit" type="submit">Отправить заявку</button>
+        </form>
+
+        <aside class="appointment-booking__summary">
+            <div class="appointment-booking__summary-head">
+                <span>AVTOMOD</span>
+                <h3>Ваша заявка</h3>
+            </div>
+
+            <div class="appointment-booking__summary-box">
+                <span>Автомобиль</span>
+                <strong data-appointment-summary="car">Марка, модель и год выпуска</strong>
+            </div>
+
+            <div class="appointment-booking__summary-box">
+                <span>Работы</span>
+                <strong data-appointment-summary="service">Выберите услугу</strong>
+                <p data-appointment-summary="comment">Опишите симптомы, чтобы мастер быстрее понял задачу.</p>
+            </div>
+
+            <div class="appointment-booking__summary-box">
+                <span>Связь</span>
+                <strong data-appointment-summary="contact">Мастер перезвонит по указанному номеру</strong>
+            </div>
+
+            <div class="appointment-booking__summary-note">
+                <strong>Точная стоимость после осмотра</strong>
+                <p>Перед ремонтом согласуем причину, объем работ и смету.</p>
+            </div>
+
+            <a href="tel:+375295325752">+375 29 532-57-52</a>
+        </aside>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'services/js/appointment.js' %}" defer></script>
+{% endblock %}

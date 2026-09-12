@@ -1,0 +1,106 @@
+{% extends "services/base.html" %}
+
+{% block title %}Контакты - AVTOMOD{% endblock %}
+
+{% block content %}
+<section class="page-title contacts-hero">
+    <div class="contacts-hero__inner">
+        <div class="contacts-hero__badge">
+            <span></span>
+            Контакты
+        </div>
+
+        <h1>AVTO<span>MOD</span></h1>
+        <p><strong>ул. Чонгарской дивизии, 5/1.</strong> Работаем с ремонтом и обслуживанием автомобилей.</p>
+
+        <div class="contacts-hero__actions">
+            <a class="button primary" href="tel:+375295325752">+375 29 532-57-52</a>
+            <a class="button secondary" href="{% url 'appointment_create' %}">Записаться на ремонт</a>
+            <a class="button secondary" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Маршрут в Яндекс.Картах</a>
+        </div>
+    </div>
+</section>
+
+<section class="contacts-layout">
+    <div class="contact-grid contacts-cards">
+        <article class="contact-item contacts-card">
+            <div class="contacts-card__top">
+                <div class="contacts-card__icon">TEL</div>
+                <a class="contacts-card__small" href="tel:+375295325752">Позвонить</a>
+            </div>
+            <span>Телефон</span>
+            <a href="tel:+375295325752">+375 29 532-57-52</a>
+            <p>Прием звонков, консультация и запись на диагностику.</p>
+        </article>
+
+        <article class="contact-item contacts-card">
+            <div class="contacts-card__top">
+                <div class="contacts-card__icon contacts-card__icon--green">TIME</div>
+                <span class="contacts-card__status">Пн-Пт</span>
+            </div>
+            <span>График</span>
+            <strong>09:00-18:00</strong>
+            <p>Работаем с понедельника по пятницу.</p>
+        </article>
+
+        <article class="contact-item contacts-card">
+            <div class="contacts-card__top">
+                <div class="contacts-card__icon contacts-card__icon--blue">MAP</div>
+                <a class="contacts-card__small" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Открыть</a>
+            </div>
+            <span>Карта</span>
+            <a href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Яндекс.Карты</a>
+            <p>г. Гомель, ул. Чонгарской дивизии, 5/1.</p>
+        </article>
+    </div>
+
+    <section class="contacts-map">
+        <div class="contacts-map__header">
+            <div>
+                <div class="contacts-map__label">
+                    <span></span>
+                    Геолокация и маршрут
+                </div>
+                <strong>ул. Чонгарской дивизии, 5/1</strong>
+                <p>г. Гомель, Беларусь</p>
+            </div>
+            <a class="button primary" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Построить маршрут</a>
+        </div>
+
+        <div class="contacts-map__frame">
+            <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=30.987500%2C52.443500&z=16&pt=30.987500%2C52.443500%2Cpm2rdm"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                allowfullscreen
+                title="AVTOMOD - карта проезда">
+            </iframe>
+        </div>
+
+        <div class="contacts-map__footer">
+            <div>
+                <strong>Адрес</strong>
+                <p>Гомель, ул. Чонгарской дивизии, 5/1</p>
+            </div>
+            <div>
+                <strong>График</strong>
+                <p>Пн-Пт: 09:00-18:00</p>
+            </div>
+            <div>
+                <strong>Запись</strong>
+                <p>Позвоните или оставьте заявку на сайте.</p>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section class="contacts-service">
+    <div>
+        <span>Направления</span>
+        <strong>Шиномонтаж, диагностика, подвеска, тормоза, выхлопная система и двигатель.</strong>
+    </div>
+    <a class="button secondary" href="{% url 'service_list' %}">Посмотреть услуги</a>
+</section>
+
+{% endblock %}

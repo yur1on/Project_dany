@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}AVTOMOD{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'services/css/styles.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{% url 'home' %}">
+            <img class="brand-logo" src="{% static 'services/img/auto-mod-logo.jpg' %}" alt="AVTOMOD">
+            <span>
+                <strong class="brand-name">AVTOMOD</strong>
+                <small>сервис и диагностика</small>
+            </span>
+        </a>
+        <nav class="nav">
+            <a href="{% url 'service_list' %}">Услуги</a>
+            <a href="{% url 'appointment_create' %}">Запись</a>
+            <a href="{% url 'contacts' %}">Контакты</a>
+        </nav>
+        <a class="phone" href="tel:+375295325752">+375 29 532-57-52</a>
+    </header>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div>
+            <strong>AVTOMOD</strong>
+            <p>Ремонт и обслуживание автомобилей.</p>
+        </div>
+        <div>
+            <span>Пн-Пт: 09:00-18:00</span>
+            <span>ул. Чонгарской дивизии, 5/1</span>
+        </div>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
