@@ -1,6 +1,4 @@
 {% extends "services/base.html" %}
-{% load static %}
-
 {% block title %}AVTOMOD - автосервис{% endblock %}
 
 {% block content %}
@@ -13,7 +11,7 @@
                 <small>Автосервис в Гомеле</small>
             </div>
 
-            <h1 class="hero-title">Вернем машине уверенный ход без лишнего шума вокруг ремонта</h1>
+            <h1 class="hero-title">Вернем авто уверенность на дороге</h1>
             <p class="lead">Шиномонтаж, диагностика, подвеска, тормоза, выхлопная система и ремонт двигателя.</p>
 
             <div class="home-hero__checks">
@@ -49,26 +47,6 @@
                 </div>
             </div>
         </div>
-
-        <aside class="home-hero__visual" aria-label="AVTOMOD автосервис">
-            <div class="home-hero__card">
-                <div class="home-hero__image">
-                    <img src="{% static 'services/img/workshop-hero.png' %}" alt="Ремзона AVTOMOD">
-                    <div class="home-hero__image-note">
-                        <span>Ремзона AVTOMOD</span>
-                        <strong>Осмотр → согласование → ремонт</strong>
-                    </div>
-                </div>
-
-                <div class="home-hero__summary">
-                    <div>
-                        <span>Основные направления</span>
-                        <strong>Подвеска, тормоза, двигатель, шиномонтаж</strong>
-                    </div>
-                    <a href="{% url 'contacts' %}">Контакты</a>
-                </div>
-            </div>
-        </aside>
     </div>
 </section>
 

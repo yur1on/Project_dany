@@ -12,23 +12,11 @@
         </div>
         <h1>Оставьте заявку на ремонт</h1>
         <p>Укажите автомобиль, тип работ и симптомы. Мы свяжемся с вами и согласуем удобный визит в AVTOMOD.</p>
-
-        <div class="appointment-booking__chips">
-            <span>Диагностика перед работами</span>
-            <span>Смета до ремонта</span>
-            <span>Пн-Пт: 09:00-18:00</span>
-        </div>
     </div>
 
     <div class="appointment-booking__layout">
         <form class="form appointment-form appointment-booking__form" method="post">
             {% csrf_token %}
-
-            <div class="appointment-booking__steps">
-                <span>1. Автомобиль</span>
-                <span>2. Вид работ</span>
-                <span>3. Контакты</span>
-            </div>
 
             <div class="appointment-booking__section">
                 <div class="appointment-booking__section-head">
