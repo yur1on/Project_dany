@@ -1,0 +1,5 @@
+.appointment-confirmation { display: flex; align-items: start; gap: 15px; max-width: 540px; margin: 0 auto; padding: 20px; border: 1px solid #d96542; border-radius: 8px; background: #fafaf8; color: #26332d; }
+.appointment-confirmation__icon { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 50%; background: #e6f0e8; color: #326a49; font-weight: 700; }
+.appointment-confirmation strong { font-size: 16px; }
+.appointment-confirmation p { margin: 5px 0 8px; color: #52645a; font-size: 14px; }
+.appointment-confirmation a { color: #a74b30; font-size: 13px; font-weight: 700; }

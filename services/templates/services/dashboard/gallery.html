@@ -1,0 +1,15 @@
+{% extends "services/dashboard/base.html" %}
+{% block title %}Галерея{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Содержание сайта</p><h1>Галерея</h1></div>{% if perms.services.add_servicephoto %}<a class="button button-primary" href="{% url 'dashboard_photo_add' %}">Добавить фото</a>{% endif %}</div>
+<div class="photo-grid">
+{% for photo in photos %}
+<article class="photo-item">
+    <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Фото работы' }}" loading="lazy">
+    <div class="photo-item__info"><strong>{{ photo.caption|default:"Без подписи" }}</strong><p>{% if photo.service %}{{ photo.service.title }}{% else %}Общая галерея{% endif %} · Порядок: {{ photo.order }}</p>
+    <div class="content-row__actions">{% if perms.services.change_servicephoto %}<a class="button button-outline" href="{% url 'dashboard_photo_edit' photo.pk %}">Изменить</a>{% endif %}
+    {% if perms.services.delete_servicephoto %}<form method="post" action="{% url 'dashboard_photo_delete' photo.pk %}" onsubmit="return confirm('Удалить фотографию из галереи?');">{% csrf_token %}<button class="button button-outline" type="submit">Удалить</button></form>{% endif %}</div></div>
+</article>
+{% empty %}<p class="content-empty">Фотографий пока нет.</p>{% endfor %}
+</div>
+{% endblock %}

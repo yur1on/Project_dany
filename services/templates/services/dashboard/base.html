@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/jpeg" href="{% static 'services/img/auto-mod-logo.jpg' %}">
+    <title>{% block title %}Панель управления{% endblock %} - AVTOMOD</title>
+    <link rel="stylesheet" href="{% static 'services/css/dashboard.css' %}?v=20261030-1">
+</head>
+<body>
+<div class="dashboard-shell">
+    <aside class="sidebar">
+        <a class="dashboard-brand" href="{% url 'dashboard_home' %}">AVTO<span>MOD</span><small>Панель управления</small></a>
+        <nav class="dashboard-nav" aria-label="Разделы панели">
+            <a href="{% url 'dashboard_home' %}"{% if request.resolver_match.url_name == 'dashboard_home' %} aria-current="page"{% endif %}>Обзор</a>
+            {% if perms.services.view_appointment or perms.services.change_appointment %}<a href="{% url 'dashboard_appointments' %}"{% if request.resolver_match.url_name == 'dashboard_appointments' %} aria-current="page"{% endif %}>Заявки</a>{% endif %}
+            {% if perms.services.view_service or perms.services.change_service %}<a href="{% url 'dashboard_services' %}"{% if 'dashboard_service' in request.resolver_match.url_name %} aria-current="page"{% endif %}>Услуги</a>{% endif %}
+            {% if perms.services.view_servicephoto or perms.services.change_servicephoto %}<a href="{% url 'dashboard_gallery' %}"{% if 'dashboard_photo' in request.resolver_match.url_name or request.resolver_match.url_name == 'dashboard_gallery' %} aria-current="page"{% endif %}>Галерея</a>{% endif %}
+            {% if perms.services.view_sitesettings or perms.services.change_sitesettings %}<a href="{% url 'dashboard_settings' %}"{% if request.resolver_match.url_name == 'dashboard_settings' %} aria-current="page"{% endif %}>Настройки сайта</a>{% endif %}
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="{% url 'home' %}">Открыть сайт ↗</a>
+            <form method="post" action="{% url 'dashboard_logout' %}">{% csrf_token %}<button type="submit">Выйти</button></form>
+        </div>
+    </aside>
+    <main class="dashboard-main">
+        <header class="dashboard-top"><span>AVTOMOD / Панель управления</span><span>{{ request.user.get_username }}</span></header>
+        <div class="dashboard-content">
+            {% if messages %}<div class="notices" role="status">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</div>
+</body>
+</html>

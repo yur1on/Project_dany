@@ -4,33 +4,55 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}AVTOMOD{% endblock %}</title>
+    <link rel="icon" type="image/webp" href="{% static 'services/img/avtomod-logo-engineering.webp' %}">
+    <title>{% block title %}{{ site_settings.name }}{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'services/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'services/css/styles.css' %}?v=20261030-2">
+    <link rel="stylesheet" href="{% static 'services/css/public-editorial.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'services/css/garage-public.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'services/css/interactions.css' %}?v=1">
+    {% if request.resolver_match.url_name == 'home' %}<link rel="stylesheet" href="{% static 'services/css/appointment-confirmation.css' %}?v=1">{% endif %}
+    {% block extra_head %}{% endblock %}
 </head>
-<body>
-    <header class="site-header">
-        <a class="brand" href="{% url 'home' %}">
-            <img class="brand-logo" src="{% static 'services/img/auto-mod-logo.jpg' %}" alt="AVTOMOD">
-            <span>
-                <strong class="brand-name">AVTOMOD</strong>
-                <small>сервис и диагностика</small>
-            </span>
+<body class="{% block body_class %}{% endblock %}">
+    <header class="site-header" data-site-header>
+        <div class="container header-inner">
+        <a class="brand" href="{% url 'home' %}" aria-label="{{ site_settings.name }} - главная">
+            <img class="brand-logo" src="{% static 'services/img/avtomod-logo-engineering.webp' %}" alt="Логотип {{ site_settings.name }}" width="160" height="100">
         </a>
-        <nav class="nav">
-            <a href="{% url 'service_list' %}">Услуги</a>
-            <a href="{% url 'appointment_create' %}">Запись</a>
-            <a href="{% url 'contacts' %}">Контакты</a>
-        </nav>
-        <a class="phone" href="tel:+375295325752">+375 29 532-57-52</a>
+
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Открыть меню" aria-controls="siteMenu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="site-menu" id="siteMenu" data-site-menu>
+            <nav class="nav" aria-label="Основная навигация">
+                <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Главная</a>
+                <a href="{% url 'service_list' %}" {% if request.resolver_match.url_name == 'service_list' %}aria-current="page"{% endif %}>Услуги</a>
+                <a href="{% url 'gallery' %}" {% if request.resolver_match.url_name == 'gallery' %}aria-current="page"{% endif %}>Наши работы</a>
+                <a href="{% url 'contacts' %}" {% if request.resolver_match.url_name == 'contacts' %}aria-current="page"{% endif %}>Контакты</a>
+            </nav>
+            <div class="header-actions">
+                {% if can_access_dashboard %}
+                <a class="header-dashboard" href="{% url 'dashboard_home' %}"><span aria-hidden="true">&#9881;</span> Панель управления</a>
+                {% endif %}
+                <a class="header-phone" href="tel:{{ site_settings.phone_href }}">{{ site_settings.phone }}</a>
+                <a class="btn btn-primary header-cta" href="{% url 'appointment_create' %}" {% if request.resolver_match.url_name == 'appointment_create' %}aria-current="page"{% endif %}>Заказать звонок</a>
+            </div>
+        </div>
+        </div>
     </header>
 
     {% if messages %}
-        <div class="messages">
+        <div class="messages" role="status" aria-live="polite">
             {% for message in messages %}
-                <div class="message">{{ message }}</div>
+                {% if message.tags == 'success' and request.resolver_match.url_name == 'home' %}
+                    <div class="message appointment-confirmation"><span class="appointment-confirmation__icon" aria-hidden="true">✓</span><div><strong>Заявка отправлена</strong><p>{{ message }}</p><a href="{% url 'home' %}">На главную ↗</a></div></div>
+                {% else %}<div class="message">{{ message }}</div>{% endif %}
             {% endfor %}
         </div>
     {% endif %}
@@ -39,16 +61,41 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer">
-        <div>
-            <strong>AVTOMOD</strong>
-            <p>Ремонт и обслуживание автомобилей.</p>
+    <footer class="site-footer">
+        <div class="footer-grid container">
+            <div class="footer-brand">
+                <strong>{{ site_settings.name }}</strong>
+                <p>Ремонт и обслуживание автомобилей.</p>
+                <a href="tel:{{ site_settings.phone_href }}">{{ site_settings.phone }}</a>
+                {% if site_settings.extra_phone %}<a href="tel:{{ site_settings.extra_phone_href }}">{{ site_settings.extra_phone }}</a>{% endif %}
+            </div>
+            <div>
+                <h2>Услуги</h2>
+                <a href="{% url 'service_list' %}">Услуги автосервиса</a>
+                <a href="{% url 'gallery' %}">Фотографии работ</a>
+            </div>
+            <div>
+                <h2>Клиентам</h2>
+                <a href="{% url 'appointment_create' %}">Заказать звонок</a>
+                <a href="{% url 'service_list' %}">Список услуг</a>
+                <a href="{% url 'contacts' %}">Контакты</a>
+            </div>
+            <div>
+                <h2>Контакты</h2>
+                <p>{{ site_settings.address }}</p>
+                <p>{{ site_settings.hours }}</p>
+                {% if site_settings.map_url %}<a href="{{ site_settings.map_url }}" target="_blank" rel="noopener">Построить маршрут</a>{% endif %}
+                {% if site_settings.telegram_url %}<a href="{{ site_settings.telegram_url }}" target="_blank" rel="noopener">Telegram</a>{% endif %}
+                {% if site_settings.messenger_url %}<a href="{{ site_settings.messenger_url }}" target="_blank" rel="noopener">Мессенджер</a>{% endif %}
+            </div>
         </div>
-        <div>
-            <span>Пн-Пт: 09:00-18:00</span>
-            <span>ул. Чонгарской дивизии, 5/1</span>
+        <div class="footer-bottom container">
+            <span>© {% now "Y" %} {{ site_settings.name }}</span>
+            <span>Автосервис и диагностика</span>
         </div>
     </footer>
+
+    <script src="{% static 'services/js/site.js' %}?v=20261030-3" defer></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,20 @@
+{% extends 'services/preview/base.html' %}
+{% block variant %}preview-c{% endblock %}
+{% block content %}
+<section class="c-intro">
+    <div class="preview-wrap c-intro__layout">
+        <div class="c-intro__copy">
+            <p class="preview-eyebrow">АВТОСЕРВИС <span>/</span> {{ site_settings.name }}</p>
+            <h1>{{ site_settings.hero_title }}</h1>
+            <p class="c-intro__description">{{ site_settings.description|linebreaksbr }}</p>
+            <div class="c-intro__actions"><a class="preview-button" href="{% url 'appointment_create' %}">Заказать звонок <span aria-hidden="true">↗</span></a><a class="b-text-link" href="{% url 'service_list' %}">Услуги <span aria-hidden="true">↗</span></a></div>
+        </div>
+        {% if photo %}<div class="c-intro__photo"><img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Работа в мастерской' }}"></div>{% endif %}
+    </div>
+</section>
+<nav class="preview-wrap c-links" aria-label="Разделы сайта">
+    <a class="c-links__services" href="{% url 'service_list' %}"><span>01 / СЕРВИС</span><strong>Услуги</strong><small>Обслуживание и ремонт</small><b aria-hidden="true">↗</b></a>
+    <a class="c-links__work" href="{% url 'gallery' %}"><span>02 / ФОТОГАЛЕРЕЯ</span><strong>Наши работы</strong><small>Фотографии мастерской</small><b aria-hidden="true">↗</b></a>
+    <a class="c-links__about" href="{% url 'contacts' %}"><span>03 / {{ site_settings.name }}</span><strong>Контакты</strong><small>{{ site_settings.address }}</small><b aria-hidden="true">↗</b></a>
+</nav>
+{% endblock %}

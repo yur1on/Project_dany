@@ -1,0 +1,15 @@
+{% extends "services/base.html" %}
+{% load static %}
+{% block title %}Галерея работ - {{ site_settings.name }}{% endblock %}
+{% block body_class %}gallery-page{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'services/css/gallery-technical.css' %}?v=2">{% endblock %}
+{% block content %}
+<section class="page-hero gallery-heading"><div class="container"><div class="eyebrow"><span></span> {{ site_settings.name }} / Галерея</div><h1>Наши работы</h1><p>Фотографии выполненных работ и процесса ремонта автомобилей.</p></div></section>
+<section class="section gallery-section"><div class="container public-gallery">
+{% for photo in photos %}
+<figure><a href="{{ photo.image.url }}" data-gallery-photo data-caption="{{ photo.caption|default:'Фото работы мастерской' }}" target="_blank" rel="noopener"><img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Фото работы мастерской' }}" loading="lazy"><span class="gallery-view-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4M11 8v6m-3-3h6"/></svg></span></a>{% if photo.caption or photo.service %}<figcaption>{% if photo.caption %}<strong>{{ photo.caption }}</strong>{% endif %}{% if photo.service %}<span>{{ photo.service.title }}</span>{% endif %}</figcaption>{% endif %}</figure>
+{% empty %}<div class="gallery-empty"><span>ГАЛЕРЕЯ</span><h2>Фотографии работ скоро появятся</h2><a class="home-text-link" href="{% url 'service_list' %}">Посмотреть услуги →</a></div>{% endfor %}
+</div></section>
+<dialog class="work-dialog" aria-label="Просмотр фотографии"><div class="work-dialog__inner"><button class="work-dialog__close" type="button" aria-label="Закрыть">×</button><img alt=""><p></p><div class="work-dialog__nav"><button type="button" data-prev aria-label="Предыдущая фотография">←</button><button type="button" data-next aria-label="Следующая фотография">→</button></div></div></dialog>
+{% endblock %}
+{% block scripts %}<script src="{% static 'services/js/gallery.js' %}?v=3" defer></script>{% endblock %}

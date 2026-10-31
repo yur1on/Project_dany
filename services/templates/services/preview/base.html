@@ -1,0 +1,23 @@
+{% load static %}<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site_settings.name }} — предпросмотр</title>
+    <link rel="stylesheet" href="{% static 'services/css/home-previews.css' %}?v=3">
+</head>
+<body class="{% block variant %}{% endblock %}">
+<header class="preview-header" data-site-header>
+    <div class="preview-wrap preview-header__inner">
+        <a class="preview-brand" href="{% url 'home' %}" aria-label="{{ site_settings.name }} — главная"><img src="{% static 'services/img/avtomod-logo-engineering.webp' %}" alt="Логотип {{ site_settings.name }}" width="125" height="78"></a>
+        <button class="preview-menu-toggle" type="button" data-menu-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="previewMenu"><span></span><span></span><span></span></button>
+        <div class="preview-menu" id="previewMenu" data-site-menu>
+            <nav aria-label="Основная навигация"><a href="{% url 'home' %}">Главная</a><a href="{% url 'service_list' %}">Услуги</a><a href="{% url 'gallery' %}">Наши работы</a><a href="{% url 'contacts' %}">Контакты</a></nav>
+            <a class="preview-menu__phone" href="tel:{{ site_settings.phone_href }}">{{ site_settings.phone }}</a>
+            <a class="preview-menu__cta" href="{% url 'appointment_create' %}">Заказать звонок <span aria-hidden="true">↗</span></a>
+        </div>
+    </div>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="preview-footer"><div class="preview-wrap preview-footer__inner"><div><strong>{{ site_settings.name }}</strong><span>Ремонт и обслуживание автомобилей</span></div><div><span>{{ site_settings.address }}</span><span>{{ site_settings.hours }}</span></div><a href="tel:{{ site_settings.phone_href }}">{{ site_settings.phone }}</a><small>© {% now 'Y' %} {{ site_settings.name }}</small></div></footer>
+<script src="{% static 'services/js/site.js' %}" defer></script>
+</body></html>

@@ -1,40 +1,31 @@
 {% extends "services/base.html" %}
 {% load static %}
 
-{% block title %}Услуги автосервиса - AVTOMOD{% endblock %}
+{% block title %}Услуги автосервиса - {{ site_settings.name }}{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'services/css/services-cards.css' %}?v=8">{% endblock %}
 
 {% block content %}
 <div class="services-page">
-    <section class="services-dark-hero">
-        <div class="services-dark-hero__content">
-            <div class="services-kicker">
-                <span></span>
-                Услуги AVTOMOD
+    <section class="page-hero">
+        <div class="container">
+            <div>
+                <div class="eyebrow"><span></span> {{ site_settings.name }} / Услуги</div>
+                <h1>Услуги автосервиса</h1>
+                <p>Диагностика, обслуживание и ремонт вашего автомобиля.</p>
             </div>
-            <h1>Что делает <strong>AVTOMOD</strong></h1>
-        </div>
-
-        <div class="services-search-panel">
-            <label for="serviceSearch">Поиск услуги</label>
-            <input id="serviceSearch" type="search" placeholder="Например: тормоза, ГРМ, подвеска">
-            <span data-services-count>{{ services|length }} услуг доступно</span>
         </div>
     </section>
-
-    <section class="services-filter" aria-label="Фильтр услуг">
-        <button class="services-filter__button is-active" type="button" data-service-filter="all">Все услуги</button>
-        <button class="services-filter__button" type="button" data-service-filter="wheels">Колеса</button>
-        <button class="services-filter__button" type="button" data-service-filter="chassis">Ходовая</button>
-        <button class="services-filter__button" type="button" data-service-filter="engine">Двигатель</button>
-        <button class="services-filter__button" type="button" data-service-filter="diagnostics">Диагностика</button>
-    </section>
-
-    <section class="services-list" id="services-list">
+    <div class="container services-search"><div class="search-panel">
+        <label for="serviceSearch" class="services-search__label">Поиск услуги</label>
+        <div class="services-search__input"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="serviceSearch" type="search" placeholder="Например: тормоза, ГРМ, подвеска"></div>
+        <span data-services-count>{{ services|length }} услуг доступно</span>
+    </div></div>
+    <section class="services-list container" id="services-list" aria-label="Список услуг">
         {% for service in services %}
             <article
+                id="service-{{ service.pk }}"
                 class="service-row {% if service.is_popular %}service-row--popular{% endif %}"
                 data-service-row
-                data-category="{% if 'Шиномонтаж' in service.title %}wheels{% elif 'подвес' in service.title|lower or 'тормоз' in service.title|lower or 'рулев' in service.title|lower %}chassis{% elif 'двигател' in service.title|lower or 'грм' in service.title|lower or 'выхлоп' in service.title|lower %}engine{% elif 'диагност' in service.title|lower %}diagnostics{% else %}other{% endif %}"
                 data-search="{{ service.title }} {{ service.description }}{% for item in service.description_items.all %} {{ item.text }}{% endfor %}"
             >
                 <div class="service-row__index">
@@ -47,7 +38,11 @@
                         {% if service.is_popular %}<span>часто выбирают</span>{% endif %}
                     </div>
 
-                    <div class="service-row__details" hidden>
+                    {% if service.description %}
+                        <p>{{ service.description }}</p>
+                    {% endif %}
+
+                    <div class="service-row__details" id="service-details-{{ service.pk }}" hidden>
                         {% with detail_items=service.description_items.all %}
                             {% if detail_items %}
                                 <ol>
@@ -71,7 +66,7 @@
                                                 data-gallery-image="{{ photo.image.url }}"
                                                 data-gallery-caption="{{ photo.caption|default:service.title }}"
                                             >
-                                                <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:service.title }}">
+                                                <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:service.title }}" loading="lazy">
                                             </button>
                                             {% if photo.caption %}
                                                 <figcaption>{{ photo.caption }}</figcaption>
@@ -81,12 +76,12 @@
                                 </div>
                             {% endif %}
                         {% endwith %}
+                        <a class="service-row__callback" href="{% url 'appointment_create' %}">Заказать звонок <span aria-hidden="true">↗</span></a>
                     </div>
                 </div>
 
                 <div class="service-row__actions">
-                    <button type="button" data-toggle-details>Подробнее</button>
-                    <a href="{% url 'appointment_create' %}">Записаться →</a>
+                    <button type="button" data-toggle-details aria-expanded="false" aria-controls="service-details-{{ service.pk }}">Подробнее</button>
                 </div>
             </article>
         {% empty %}
@@ -99,16 +94,18 @@
         </div>
     </section>
 
-    <section class="service-note services-dark-note">
-        <div>
-            <p class="eyebrow">Запись</p>
-            <h2>Опишите проблему, мы подскажем ближайшее время для визита</h2>
+    <section class="section cta-band">
+        <div class="container cta-card">
+            <div>
+                <span class="section-kicker">Не знаете, что выбрать?</span>
+                <h2>Опишите симптомы в заявке, мастер уточнит вид работ</h2>
+            </div>
+            <a class="btn btn-primary" href="{% url 'appointment_create' %}">Заказать звонок</a>
         </div>
-        <a class="button primary" href="{% url 'appointment_create' %}">Записаться</a>
     </section>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'services/js/services.js' %}" defer></script>
+<script src="{% static 'services/js/services.js' %}?v=20261030-3" defer></script>
 {% endblock %}

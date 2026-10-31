@@ -1,0 +1,31 @@
+@keyframes garage-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes garage-photo-enter { from { opacity: .55; } to { opacity: 1; } }
+@keyframes garage-dialog-enter { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.nav a { transition: color 160ms ease, background-color 160ms ease, padding 160ms ease, border-color 160ms ease; }
+.nav a:hover, .nav a:focus-visible { color: #f2b59b; }
+.garage-hero__image { animation: garage-photo-enter 600ms ease-out both; transition: transform 600ms ease; }
+@media (hover: hover) { .garage-hero:hover .garage-hero__image { transform: scale(1.015); } }
+.garage-hero__intro { animation: garage-enter 450ms ease-out both; }
+.garage-hero__intro .btn span { display: inline-block; transition: transform 180ms ease; }
+.garage-hero__intro .btn:hover span, .garage-hero__intro .btn:focus-visible span { transform: translate(3px,-3px); }
+.service-row { transition: background-color 180ms ease; }
+@media (hover: hover) { .service-row:hover { background-color: rgba(58,85,65,.05); } }
+.service-row:not([hidden]) { animation: garage-enter 180ms ease-out both; }
+.service-row__actions button { transition: color 160ms ease; }
+.service-row__actions button[aria-expanded="true"] { color: var(--accent); }
+.public-gallery figure a { overflow: hidden; }
+.public-gallery img { transition: transform 220ms ease; }
+@media (hover: hover) { .public-gallery figure a:hover img { transform: scale(1.025); } }
+.work-dialog[open] .work-dialog__inner { animation: garage-dialog-enter 200ms ease-out both; }
+.gallery-lightbox:not([hidden]) .gallery-lightbox__dialog { animation: garage-dialog-enter 200ms ease-out both; }
+.form input, .form textarea, .search-panel input { transition: border-color 160ms ease, box-shadow 160ms ease; }
+.form input:focus, .form textarea:focus, .search-panel input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(188,101,73,.14); }
+.form p:has(.field-error) input, .form p:has(.field-error) textarea { border-color: #ae291d; }
+.appointment-booking__submit:disabled { opacity: .7; cursor: wait; }
+@media (max-width: 1100px) {
+    .site-menu { display: grid; visibility: hidden; opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms; }
+    .site-menu.is-open { visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto; transition: opacity 180ms ease, transform 180ms ease, visibility 0s; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

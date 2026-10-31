@@ -1,0 +1,26 @@
+<div class="table-wrap">
+<table class="requests-table">
+    <thead><tr><th>Дата</th><th>Клиент</th><th>Телефон</th><th>Комментарий</th><th>Статус</th><th><span class="visually-hidden">Действия</span></th></tr></thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td data-label="Дата">{{ item.created_at|date:"d.m.Y" }} <span class="muted">{{ item.created_at|date:"H:i" }}</span></td>
+            <td data-label="Клиент"><strong>{{ item.name }}</strong></td>
+            <td data-label="Телефон"><a class="phone-link" href="tel:{{ item.phone }}">{{ item.phone }}</a></td>
+            <td data-label="Комментарий" class="comment">{{ item.comment|default:"—"|linebreaksbr }}</td>
+            <td data-label="Статус">{% if item.is_processed %}<span class="status status-done">Обработана</span>{% else %}<span class="status status-new">Новая</span>{% endif %}</td>
+            <td class="actions">
+                <a class="button button-outline" href="tel:{{ item.phone }}">Позвонить</a>
+                {% if not item.is_processed and perms.services.change_appointment %}
+                <form method="post" action="{% url 'dashboard_mark_processed' item.pk %}" onsubmit="return confirm('Отметить заявку как обработанную?');">
+                    {% csrf_token %}<button class="button button-outline" type="submit">Обработана</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td class="empty" colspan="6">Заявок пока нет.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>

@@ -1,106 +1,31 @@
 {% extends "services/base.html" %}
-
-{% block title %}Контакты - AVTOMOD{% endblock %}
-
+{% load static %}
+{% block title %}Контакты - {{ site_settings.name }}{% endblock %}
+{% block body_class %}contact-page{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'services/css/contacts-technical.css' %}?v=2">{% endblock %}
 {% block content %}
-<section class="page-title contacts-hero">
-    <div class="contacts-hero__inner">
-        <div class="contacts-hero__badge">
-            <span></span>
-            Контакты
-        </div>
-
-        <h1>AVTO<span>MOD</span></h1>
-        <p><strong>ул. Чонгарской дивизии, 5/1.</strong> Работаем с ремонтом и обслуживанием автомобилей.</p>
-
-        <div class="contacts-hero__actions">
-            <a class="button primary" href="tel:+375295325752">+375 29 532-57-52</a>
-            <a class="button secondary" href="{% url 'appointment_create' %}">Записаться на ремонт</a>
-            <a class="button secondary" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Маршрут в Яндекс.Картах</a>
+<section class="contact-studio">
+    <div class="container contact-studio__content">
+        <header class="contact-studio__heading"><p>{{ site_settings.name }} / КОНТАКТЫ</p><h1>Свяжитесь с нами</h1><div>Позвоните или оставьте заявку — мы свяжемся с вами.</div></header>
+        <div class="contact-studio__grid">
+            {% if site_settings.phone or site_settings.extra_phone %}
+            <article class="contact-tile contact-tile--phone">
+                <div class="contact-tile__top"><span>ПОЗВОНИТЬ В МАСТЕРСКУЮ</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 2.8a2 2 0 0 1-.6 1.8L7.7 9.6a16 16 0 0 0 6.7 6.7l1.3-1.3a2 2 0 0 1 1.8-.6l2.8.5a2 2 0 0 1 1.7 2Z"/></svg></div>
+                {% if site_settings.phone %}<a class="contact-tile__phone" href="tel:{{ site_settings.phone_href }}">{{ site_settings.phone }} <span aria-hidden="true">↗</span></a>{% endif %}
+                {% if site_settings.extra_phone %}<a class="contact-tile__extra" href="tel:{{ site_settings.extra_phone_href }}">{{ site_settings.extra_phone }} <span aria-hidden="true">↗</span></a>{% endif %}
+            </article>
+            {% endif %}
+            {% if site_settings.address %}
+            <article class="contact-tile contact-tile--address"><div class="contact-tile__top"><span>АДРЕС</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div><strong>{{ site_settings.address }}</strong>{% if site_settings.map_url %}<a class="contact-tile__link" href="{{ site_settings.map_url }}" target="_blank" rel="noopener">Построить маршрут <span aria-hidden="true">↗</span></a>{% endif %}</article>
+            {% endif %}
+            {% if site_settings.hours %}
+            <article class="contact-tile contact-tile--hours"><div class="contact-tile__top"><span>ГРАФИК РАБОТЫ</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><strong>{{ site_settings.hours }}</strong></article>
+            {% endif %}
+            <article class="contact-tile contact-tile--callback"><div><span>ОБРАТНЫЙ ЗВОНОК</span><h2>Оставьте заявку</h2><p>Мы свяжемся с вами.</p></div><a class="btn btn-primary" href="{% url 'appointment_create' %}">Заказать звонок <span aria-hidden="true">↗</span></a></article>
+            {% if site_settings.telegram_url or site_settings.messenger_url %}
+            <article class="contact-tile contact-tile--messengers"><span>МЕССЕНДЖЕРЫ</span><div>{% if site_settings.telegram_url %}<a class="contact-tile__link" href="{{ site_settings.telegram_url }}" target="_blank" rel="noopener">Telegram <span aria-hidden="true">↗</span></a>{% endif %}{% if site_settings.messenger_url %}<a class="contact-tile__link" href="{{ site_settings.messenger_url }}" target="_blank" rel="noopener">Мессенджер <span aria-hidden="true">↗</span></a>{% endif %}</div></article>
+            {% endif %}
         </div>
     </div>
 </section>
-
-<section class="contacts-layout">
-    <div class="contact-grid contacts-cards">
-        <article class="contact-item contacts-card">
-            <div class="contacts-card__top">
-                <div class="contacts-card__icon">TEL</div>
-                <a class="contacts-card__small" href="tel:+375295325752">Позвонить</a>
-            </div>
-            <span>Телефон</span>
-            <a href="tel:+375295325752">+375 29 532-57-52</a>
-            <p>Прием звонков, консультация и запись на диагностику.</p>
-        </article>
-
-        <article class="contact-item contacts-card">
-            <div class="contacts-card__top">
-                <div class="contacts-card__icon contacts-card__icon--green">TIME</div>
-                <span class="contacts-card__status">Пн-Пт</span>
-            </div>
-            <span>График</span>
-            <strong>09:00-18:00</strong>
-            <p>Работаем с понедельника по пятницу.</p>
-        </article>
-
-        <article class="contact-item contacts-card">
-            <div class="contacts-card__top">
-                <div class="contacts-card__icon contacts-card__icon--blue">MAP</div>
-                <a class="contacts-card__small" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Открыть</a>
-            </div>
-            <span>Карта</span>
-            <a href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Яндекс.Карты</a>
-            <p>г. Гомель, ул. Чонгарской дивизии, 5/1.</p>
-        </article>
-    </div>
-
-    <section class="contacts-map">
-        <div class="contacts-map__header">
-            <div>
-                <div class="contacts-map__label">
-                    <span></span>
-                    Геолокация и маршрут
-                </div>
-                <strong>ул. Чонгарской дивизии, 5/1</strong>
-                <p>г. Гомель, Беларусь</p>
-            </div>
-            <a class="button primary" href="https://yandex.ru/maps/-/CPhCbWPu" target="_blank" rel="noopener">Построить маршрут</a>
-        </div>
-
-        <div class="contacts-map__frame">
-            <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=30.987500%2C52.443500&z=16&pt=30.987500%2C52.443500%2Cpm2rdm"
-                width="100%"
-                height="100%"
-                frameborder="0"
-                allowfullscreen
-                title="AVTOMOD - карта проезда">
-            </iframe>
-        </div>
-
-        <div class="contacts-map__footer">
-            <div>
-                <strong>Адрес</strong>
-                <p>Гомель, ул. Чонгарской дивизии, 5/1</p>
-            </div>
-            <div>
-                <strong>График</strong>
-                <p>Пн-Пт: 09:00-18:00</p>
-            </div>
-            <div>
-                <strong>Запись</strong>
-                <p>Позвоните или оставьте заявку на сайте.</p>
-            </div>
-        </div>
-    </section>
-</section>
-
-<section class="contacts-service">
-    <div>
-        <span>Направления</span>
-        <strong>Шиномонтаж, диагностика, подвеска, тормоза, выхлопная система и двигатель.</strong>
-    </div>
-    <a class="button secondary" href="{% url 'service_list' %}">Посмотреть услуги</a>
-</section>
-
 {% endblock %}

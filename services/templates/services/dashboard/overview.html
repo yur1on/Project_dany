@@ -1,0 +1,15 @@
+{% extends "services/dashboard/base.html" %}
+{% block title %}Обзор{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Панель управления</p><h1>Обзор</h1>{% if can_view_appointments %}<p>Заявки на обратный звонок</p>{% endif %}</div>{% if can_view_appointments %}<a class="button button-primary" href="{% url 'dashboard_appointments' %}">Все заявки <span aria-hidden="true">→</span></a>{% endif %}</div>
+{% if can_view_appointments %}
+<div class="stats">
+    <section class="stat"><span>Новые заявки</span><strong>{{ new_count }}</strong><a href="{% url 'dashboard_appointments' %}?status=new">Посмотреть новые →</a></section>
+    <section class="stat"><span>Всего заявок</span><strong>{{ total_count }}</strong><span>За все время</span></section>
+</div>
+<section class="list-section">
+    <div class="section-heading"><div><p class="kicker">Обращения</p><h2>Последние заявки</h2></div><a href="{% url 'dashboard_appointments' %}">Все заявки →</a></div>
+    {% include "services/dashboard/table.html" with items=appointments %}
+</section>
+{% endif %}
+{% endblock %}

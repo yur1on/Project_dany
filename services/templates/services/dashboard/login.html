@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/jpeg" href="{% static 'services/img/auto-mod-logo.jpg' %}">
+    <title>Вход в панель - AVTOMOD</title>
+    <link rel="stylesheet" href="{% static 'services/css/dashboard.css' %}">
+</head>
+<body class="login-page">
+    <main class="login-panel">
+        <a class="dashboard-brand" href="{% url 'home' %}">AVTO<span>MOD</span><small>Панель управления</small></a>
+        <h1>Вход в панель</h1>
+        {% if form.errors %}<p class="login-error" role="alert">Неверное имя пользователя или пароль.</p>{% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="{{ form.username.id_for_label }}">Имя пользователя</label>{{ form.username }}
+            <label for="{{ form.password.id_for_label }}">Пароль</label>{{ form.password }}
+            {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+            <button class="button button-primary" type="submit">Войти</button>
+        </form>
+        <a class="back-link" href="{% url 'home' %}">← На сайт</a>
+    </main>
+</body>
+</html>

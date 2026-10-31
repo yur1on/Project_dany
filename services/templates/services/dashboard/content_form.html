@@ -1,0 +1,21 @@
+{% extends "services/dashboard/base.html" %}
+{% load static %}
+{% block title %}{{ heading }}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Содержание сайта</p><h1>{{ heading }}</h1></div></div>
+<form class="content-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="form-field{% if field.field.widget.input_type == 'checkbox' %} form-field--checkbox{% endif %}">
+            {{ field.label_tag }} {{ field }}
+            {% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}
+            {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        </div>
+    {% endfor %}
+    {% if photo %}<img class="photo-preview" src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Текущая фотография' }}">{% endif %}
+    <img class="photo-preview" data-photo-preview hidden alt="Предпросмотр выбранной фотографии">
+    <div class="form-actions"><button class="button button-primary" type="submit">Сохранить</button><a class="button button-outline" href="{% url back %}">Отмена</a></div>
+</form>
+<script src="{% static 'services/js/photo-preview.js' %}" defer></script>
+{% endblock %}

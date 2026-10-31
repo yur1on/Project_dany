@@ -66,6 +66,27 @@ if (servicesPage) {
         renderLightbox();
     };
 
+    const setDetails = (row, open, immediate = false) => {
+        const toggle = row.querySelector("[data-toggle-details]");
+        const details = row.querySelector(".service-row__details");
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        details.getAnimations().forEach((animation) => animation.cancel());
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.textContent = open ? "Свернуть" : "Подробнее";
+        row.classList.toggle("is-expanded", open);
+        if (immediate || reduced) {
+            details.hidden = !open;
+            return;
+        }
+        if (open) {
+            details.hidden = false;
+            details.animate([{ height: "0px", opacity: 0, overflow: "hidden" }, { height: `${details.scrollHeight}px`, opacity: 1, overflow: "hidden" }], { duration: 220, easing: "ease-out" });
+        } else if (!details.hidden) {
+            const animation = details.animate([{ height: `${details.scrollHeight}px`, opacity: 1, overflow: "hidden" }, { height: "0px", opacity: 0, overflow: "hidden" }], { duration: 220, easing: "ease-in" });
+            animation.finished.then(() => { if (toggle.getAttribute("aria-expanded") === "false") details.hidden = true; }).catch(() => {});
+        }
+    };
+
     const updateRows = () => {
         const query = normalize(searchInput.value);
         let visibleCount = 0;
@@ -74,6 +95,9 @@ if (servicesPage) {
             const matchesFilter = activeFilter === "all" || row.dataset.category === activeFilter;
             const matchesQuery = normalize(row.dataset.search || "").includes(query);
             const isVisible = matchesFilter && matchesQuery;
+            if (!isVisible && row.querySelector("[data-toggle-details]").getAttribute("aria-expanded") === "true") {
+                setDetails(row, false, true);
+            }
             row.hidden = !isVisible;
             if (isVisible) visibleCount += 1;
         });
@@ -82,7 +106,10 @@ if (servicesPage) {
             emptyState.hidden = visibleCount !== 0;
         }
         if (countLabel) {
-            countLabel.textContent = `${visibleCount} услуг доступно`;
+            const lastTwo = visibleCount % 100;
+            const last = visibleCount % 10;
+            const word = lastTwo >= 11 && lastTwo <= 14 ? "услуг" : last === 1 ? "услуга" : last >= 2 && last <= 4 ? "услуги" : "услуг";
+            countLabel.textContent = `${visibleCount} ${word} ${word === "услуга" ? "доступна" : word === "услуги" ? "доступны" : "доступно"}`;
         }
     };
 
@@ -112,11 +139,13 @@ if (servicesPage) {
         if (!toggle) return;
 
         const row = toggle.closest("[data-service-row]");
-        const details = row.querySelector(".service-row__details");
-        const shouldOpen = details.hidden;
-        details.hidden = !shouldOpen;
-        toggle.textContent = shouldOpen ? "Свернуть" : "Подробнее";
-        row.classList.toggle("is-expanded", shouldOpen);
+        const shouldOpen = toggle.getAttribute("aria-expanded") !== "true";
+        if (shouldOpen) {
+            rows.forEach((other) => {
+                if (other !== row && other.querySelector("[data-toggle-details]").getAttribute("aria-expanded") === "true") setDetails(other, false);
+            });
+        }
+        setDetails(row, shouldOpen);
     });
 
     lightbox.addEventListener("click", (event) => {

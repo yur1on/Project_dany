@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AVTOMOD — автосервис в Гомеле</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="AVTOMOD — главная"><strong>AVTO<span>MOD</span></strong><small>АВТОСЕРВИС / ГОМЕЛЬ</small></a>
+    <button class="menu-toggle" type="button" aria-controls="menu" aria-expanded="false" aria-label="Открыть меню"><span></span><span></span></button>
+    <nav id="menu" class="navigation" aria-label="Основная навигация">
+      <a class="active" href="index.html" aria-current="page">Главная</a>
+      <a href="services.html">Услуги</a>
+      <a href="http://127.0.0.1:8001/gallery/">Наши работы</a>
+      <a href="http://127.0.0.1:8001/about/">О мастерской</a>
+      <a href="contacts.html">Контакты</a>
+      <a class="navigation__mobile-call" href="http://127.0.0.1:8001/appointment/">Заказать звонок <span aria-hidden="true">↗</span></a>
+    </nav>
+    <a class="header-call" href="http://127.0.0.1:8001/appointment/">Заказать звонок <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="garage" aria-labelledby="garage-title">
+      <img class="garage__photo" src="assets/work.jpg" alt="Ремонт двигателя в мастерской AVTOMOD">
+      <div class="garage__shade" aria-hidden="true"></div>
+      <div class="garage__content">
+        <div class="garage__intro">
+          <p class="eyebrow"><span></span> АВТОСЕРВИС В ГОМЕЛЕ</p>
+          <h1 id="garage-title">Ремонт и обслуживание автомобилей в Гомеле</h1>
+          <p class="garage__description">Диагностика, обслуживание и ремонт. От замены масла до ремонта двигателя.</p>
+          <a class="button" href="http://127.0.0.1:8001/appointment/">Заказать звонок <span aria-hidden="true">↗</span></a>
+        </div>
+        <nav class="section-nav" aria-label="Разделы сайта">
+          <p class="section-nav__label">НАВИГАЦИЯ <span>↘</span></p>
+          <a href="services.html"><span>01</span><strong>Услуги</strong><b aria-hidden="true">↗</b></a>
+          <a href="http://127.0.0.1:8001/gallery/"><span>02</span><strong>Наши работы</strong><b aria-hidden="true">↗</b></a>
+          <a href="http://127.0.0.1:8001/about/"><span>03</span><strong>О мастерской</strong><b aria-hidden="true">↗</b></a>
+        </nav>
+        <div class="garage__caption"><span>AVTOMOD / РАБОТА В МАСТЕРСКОЙ</span><a href="http://127.0.0.1:8001/gallery/">Посмотреть фотографии ↗</a></div>
+      </div>
+    </section>
+    <section class="visit" aria-label="Контактная информация">
+      <div class="visit__heading"><span class="visit__mark" aria-hidden="true">✳</span><div><span>НА СВЯЗИ</span><strong>Будем рады помочь</strong></div></div>
+      <div class="visit__detail"><span>АДРЕС</span><strong>ул. Чонгарской дивизии, 5/1</strong></div>
+      <div class="visit__detail"><span>ГРАФИК</span><strong>Пн–Пт: 09:00–18:00</strong></div>
+      <a class="visit__phone" href="tel:+375295325752"><span>ПОЗВОНИТЬ</span><strong>+375 29 532-57-52 ↗</strong></a>
+    </section>
+  </main>
+  <footer class="footer"><span>© 2026 AVTOMOD</span><a href="contacts.html">Контакты и маршрут ↗</a></footer>
+</body>
+</html>

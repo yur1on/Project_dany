@@ -1,0 +1,14 @@
+{% extends "services/dashboard/base.html" %}
+{% block title %}Услуги{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Содержание сайта</p><h1>Услуги</h1></div>{% if perms.services.add_service %}<a class="button button-primary" href="{% url 'dashboard_service_add' %}">Добавить услугу</a>{% endif %}</div>
+<div class="content-list">
+{% for service in services %}
+<article class="content-row">
+    <div class="content-row__body"><h2>{{ service.title }}</h2><p>{{ service.description|default:"Описание не добавлено"|truncatechars:180 }}</p><span class="status {% if service.is_visible %}status-done{% else %}status-new{% endif %}">{% if service.is_visible %}На сайте{% else %}Скрыта{% endif %}</span></div>
+    <div class="content-row__actions">{% if perms.services.change_service %}<a class="button button-outline" href="{% url 'dashboard_service_edit' service.pk %}">Изменить</a>{% endif %}
+    {% if perms.services.delete_service %}<form method="post" action="{% url 'dashboard_service_delete' service.pk %}" onsubmit="return confirm('Удалить услугу из каталога? Фотографии и история сохранятся.');">{% csrf_token %}<button class="button button-outline" type="submit">Удалить</button></form>{% endif %}</div>
+</article>
+{% empty %}<p class="content-empty">Услуг пока нет.</p>{% endfor %}
+</div>
+{% endblock %}

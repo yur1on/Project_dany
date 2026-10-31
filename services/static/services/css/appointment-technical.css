@@ -1,0 +1,25 @@
+.callback-page main { display: flex; flex-direction: column; background: #111a17; }
+.callback-studio { position: relative; isolation: isolate; flex: 1; overflow: hidden; background: #111a17; }
+.callback-studio::before { content: ''; position: absolute; inset: 0 0 auto; z-index: -1; aspect-ratio: 1586 / 992; pointer-events: none; background: url('../img/appointment-futuristic-garage.webp') center top / 100% auto no-repeat; mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%); }
+.callback-studio__content { padding-block: 40px 48px; }
+.callback-studio__heading { width: min(100%, 520px); margin: 0 auto 24px; }
+.callback-studio__heading p { margin: 0 0 12px; color: #efa68b; font: 700 11px/1.4 'Courier New', monospace; }
+.callback-studio__heading h1 { margin: 0 0 10px; color: #fff; font: 700 38px/1.15 Arial, sans-serif; }
+.callback-studio__heading div { color: #d4ded6; font-size: 15px; }
+.callback-form { width: min(100%, 520px); margin: 0 auto; padding: 30px; border: 1px solid #d96542; border-radius: 8px; background: #fafaf8; box-shadow: 0 6px 22px rgba(0,0,0,.12); animation: callback-enter 300ms ease-out both; }
+.callback-form .form-grid { gap: 16px; }
+.callback-form label { color: #23302b; font-weight: 700; }
+.callback-form input, .callback-form textarea { margin-top: 7px; border-color: #cbd4cc; border-radius: 4px; background: #fff; }
+.callback-form textarea { min-height: 96px; }
+.callback-form .field-error { margin-top: 7px; color: #a5271b; }
+.callback-form .appointment-booking__submit { margin-top: 20px; min-height: 50px; }
+@keyframes callback-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 800px) { .callback-studio::before { background-size: auto 700px; background-position: center top; aspect-ratio: auto; height: 700px; opacity: .8; } }
+@media (max-width: 540px) {
+    .callback-studio__content { padding-block: 34px 40px; }
+    .callback-studio__heading h1 { font-size: 32px; }
+    .callback-form { padding: 22px; }
+    .callback-form .form-grid { grid-template-columns: 1fr; gap: 14px; }
+    .callback-form input { min-height: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { .callback-form { animation: none; } }

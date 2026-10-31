@@ -1,0 +1,9 @@
+{% extends "services/base.html" %}
+{% block title %}О мастерской - {{ site_settings.name }}{% endblock %}
+{% block content %}
+<section class="about-page container">
+    <div class="about-page__heading"><p class="public-label">{{ site_settings.name }} / О МАСТЕРСКОЙ</p><h1>{{ site_settings.name }}</h1></div>
+    <div class="about-page__copy"><p>{{ site_settings.description|linebreaksbr }}</p>{% if site_settings.about %}<p>{{ site_settings.about|linebreaksbr }}</p>{% endif %}<a class="public-link" href="{% url 'contacts' %}">Контакты мастерской <span aria-hidden="true">↗</span></a></div>
+</section>
+{% if photos %}<section class="about-photos container" aria-label="Фотографии мастерской">{% for photo in photos %}<figure><a href="{% url 'gallery' %}"><img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'Фото работы мастерской' }}" loading="lazy"></a>{% if photo.caption %}<figcaption>{{ photo.caption }}</figcaption>{% endif %}</figure>{% endfor %}</section>{% endif %}
+{% endblock %}

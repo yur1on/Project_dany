@@ -1,0 +1,18 @@
+{% extends "services/dashboard/base.html" %}
+{% block title %}Заявки{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Обращения</p><h1>Заявки</h1><p>Заявки на обратный звонок</p></div></div>
+<nav class="filters" aria-label="Фильтр заявок">
+    <a href="?status=all"{% if selected == 'all' %} aria-current="page"{% endif %}>Все</a>
+    <a href="?status=new"{% if selected == 'new' %} aria-current="page"{% endif %}>Новые</a>
+    <a href="?status=processed"{% if selected == 'processed' %} aria-current="page"{% endif %}>Обработанные</a>
+</nav>
+{% include "services/dashboard/table.html" with items=page.object_list %}
+{% if page.paginator.num_pages > 1 %}
+<nav class="pagination" aria-label="Страницы заявок">
+    {% if page.has_previous %}<a href="?status={{ selected }}&amp;page={{ page.previous_page_number }}">← Назад</a>{% endif %}
+    <span>{{ page.number }} / {{ page.paginator.num_pages }}</span>
+    {% if page.has_next %}<a href="?status={{ selected }}&amp;page={{ page.next_page_number }}">Вперед →</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "services/dashboard/base.html" %}
+{% block title %}Настройки сайта{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="kicker">Содержание сайта</p><h1>Настройки сайта</h1></div></div>
+<form class="content-form" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <h2>Информация о мастерской</h2>
+    {% for field in form %}
+        {% if field.name == 'phone' %}<h2 class="settings-section-title">Контакты</h2>{% endif %}
+        <div class="form-field">
+            {{ field.label_tag }} {{ field }}
+            {% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}
+            {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        </div>
+    {% endfor %}
+    {% if can_edit %}<div class="form-actions"><button class="button button-primary" type="submit">Сохранить</button></div>{% endif %}
+</form>
+{% endblock %}
